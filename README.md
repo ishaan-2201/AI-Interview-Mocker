@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Interview Mocker Application
 
-## Getting Started
+An AI-powered interview mock application built with Next.js, Drizzle ORM, Neon DB, Clerk for authentication, and the Gemini API. The application helps users prepare for interviews by generating tailored mock interview questions and answers based on job details. It also supports a simulated interview experience with speech-to-text input and feedback on user responses.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The AI Interview Mock Application allows users to:
+1. **Log in securely** using Clerk authentication.
+2. **Enter job details** such as job description, job position, tech stack, years of experience, etc.
+3. **Generate mock interview questions and answers** via the Gemini API based on the provided job details. These questions and answers are stored in a Neon DB.
+4. **Start a simulated interview**, where the user’s speech is converted to text using the React Hook Speech-to-Text library.
+5. **Receive feedback and ratings** for each answer via another call to the Gemini API. The feedback and ratings are stored in a separate Neon DB table.
+6. **Access a Dashboard** where users can review past interview experiences, learn from the feedback, and prepare for upcoming interviews.
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- **User Authentication:** Secure login/register using Clerk.
+- **Job Detail Input:** Users can provide detailed job information.
+- **Interview Question Generation:** Integrates with Gemini API to generate interview questions/answers.
+- **Speech-to-Text Interview Simulation:** Uses React Hook Speech-to-Text to capture user responses during a simulated interview.
+- **Feedback & Rating:** Provides automated feedback and ratings for each response, powered by Gemini API.
+- **Data Storage:** Stores interview questions, answers, user responses, and feedback in Neon DB using Drizzle ORM.
+- **User Dashboard:** Displays past interview experiences and analytics for continuous learning.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend:** Next.js, React, Tailwind CSS (or your preferred styling framework)
+- **Backend:** Next.js API routes
+- **Database:** Neon DB (PostgreSQL)
+- **ORM:** Drizzle ORM
+- **Authentication:** Clerk
+- **APIs:** Gemini API for content generation and feedback
+- **Speech-to-Text:** React Hook Speech-to-Text
 
-## Deploy on Vercel
+## Architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **User Authentication:**
+   - Users sign up/log in using Clerk.
+2. **Job Detail Form:**
+   - After authentication, users enter job-related details.
+3. **Question Generation:**
+   - A request is sent to the Gemini API with job details.
+   - The Gemini API responds with tailored mock interview questions and answers.
+   - These are stored in a Neon DB table.
+4. **Interview Simulation:**
+   - Users start the interview.
+   - Their spoken responses are converted to text using React Hook Speech-to-Text.
+   - The responses are stored in another table in Neon DB.
+   - Another Gemini API call processes the response to provide feedback and ratings, which are also stored.
+5. **Dashboard:**
+   - Users can view past interview experiences, including questions, their responses, feedback, and ratings, for self-improvement.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
